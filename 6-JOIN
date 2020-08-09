@@ -116,7 +116,7 @@ SELECT mdate,
        team1, 
        SUM(score1) AS score1,
        team2,
-       SUM(score2) as score2
+       SUM(score2) AS score2
 FROM t1
 GROUP BY id
 ORDER BY mdate ASC, id ASC
