@@ -60,7 +60,6 @@ WHERE actor.name='Harrison Ford';
 
 
 
-
 #9. List the films where 'Harrison Ford' has appeared - but not in the starring role. This is where casting position != 1
 SELECT movie.title
 FROM movie
@@ -97,6 +96,18 @@ HAVING movie_count>2
 
 
 #12. List the film title and the leading actor for all of the films 'Julie Andrews' played in.
+
+SELECT movie.title, actor.name
+FROM casting
+JOIN movie
+ON movie.id=casting.movieid
+JOIN actor
+ON actor.id=casting.actorid
+WHERE casting.movieid IN (
+  SELECT movieid FROM casting
+  JOIN actor ON (movieid=actorid)
+  WHERE name='Julie Andrews') AND casting.ord=1 
+
 
 
 
