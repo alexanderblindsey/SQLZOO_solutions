@@ -108,8 +108,10 @@ GROUP BY goal.matchid, game.mdate;
 -- 13. List every match with the goals scored by each team. Show mdate, team1, score1, team2, score2. Sort your result by mdate, matchid, team1 and team2
 WITH t1 AS (
 			SELECT game.mdate, game.team1,
-			CASE WHEN goal.teamid=game.team1 THEN 1 ELSE 0 END score1, game.team2, -- when goal.teamid=game.team1, then fill 1 in new column. Else, fill 0. Name column "score1"
-			CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END score2, game.id
+			CASE WHEN goal.teamid=game.team1 THEN 1 ELSE 0 END score1, -- when goal.teamid=game.team1, then fill 1 in new column. Else, fill 0. Name column "score1" 
+			game.team2, 
+			CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END score2, 
+			game.id
 			FROM game
             JOIN goal ON (matchid = id)
             )
