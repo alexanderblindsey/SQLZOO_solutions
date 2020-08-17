@@ -11,11 +11,10 @@ WHERE population>
 SELECT name
 FROM world
 WHERE gdp/population >
-    (
-    SELECT gdp/population
-    FROM world
-    WHERE name='United Kingdom'
-    )
+    (SELECT gdp/population
+     FROM world
+     WHERE name='United Kingdom'
+     )
 AND continent = 'Europe'; 
 
 
@@ -35,18 +34,15 @@ ORDER BY name ASC;
 SELECT name, population
 FROM world
 WHERE population > 
-    (
-    SELECT population
+    (SELECT population
     FROM world
     WHERE name = 'Canada'
     )
 AND population <
-    (
-    SELECT population
-    FROM world
-    WHERE name = 'Poland'
-    )
-;
+    (SELECT population
+     FROM world
+     WHERE name = 'Poland'
+     );
 
 
 -- 5 Show the name and the population of each country in Europe. Show the population as a percentage of the population of Germany.
@@ -59,29 +55,30 @@ SELECT name,
                     ,0)
               ,'%') AS population
 FROM world
-WHERE continent='Europe'; # gives incorrect - ROUND function not working properly
+WHERE continent='Europe'; 
 
 
 -- 6 Which countries have a GDP greater than every country in Europe? [Give the name only.] (Some countries may have NULL gdp values)
 SELECT name FROM world
 	WHERE gdp > ALL
-		(SELECT gdp FROM world
-			WHERE continent = 'Europe' AND gdp > 0);
+		(SELECT gdp 
+		 FROM world
+		 WHERE continent = 'Europe' AND gdp > 0);
             
             
 -- 7 Find the largest country (by area) in each continent, show the continent, the name and the area:  
 SELECT continent, name, area 
 FROM world x  
-WHERE area >= ALL (
-                   SELECT area FROM world y  
-		   WHERE y.continent = x.continent  AND area >0)
+WHERE area >= ALL (SELECT area 
+		   FROM world y  
+		   WHERE y.continent = x.continent  AND area >0);
 
 
 
 -- 8 List each continent and the name of the country that comes first alphabetically.
 SELECT continent, MIN(name) AS name
 FROM world
-GROUP BY continent
+GROUP BY continent;
 
 
 
@@ -91,11 +88,9 @@ GROUP BY continent
 SELECT name, continent, population
 FROM world
 WHERE continent NOT IN 
-                       (
-						SELECT DISTINCT continent
-						FROM world
-                        WHERE population>=25000000
-                        ) 
+                       (SELECT DISTINCT continent
+			FROM world
+                        WHERE population>=25000000); 
 			
 
 
@@ -103,7 +98,6 @@ WHERE continent NOT IN
 SELECT name, continent
 FROM world x
 WHERE population > all (
-						SELECT population*3
+			SELECT population*3
                         FROM world y
-                        WHERE y.continent = x.continent AND y.name != x.name
-						)
+                        WHERE y.continent = x.continent AND y.name != x.name);
