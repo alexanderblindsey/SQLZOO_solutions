@@ -34,3 +34,6 @@ RIGHT JOIN dept ON (teacher.dept=dept.id)
 
 
 
+
+
+
