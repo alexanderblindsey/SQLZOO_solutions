@@ -45,7 +45,7 @@ JOIN casting
 ON actor.id=casting.actorid
 WHERE casting.movieid=(SELECT id
                        FROM movie
-                       WHERE title='Alien')
+                       WHERE title='Alien');
                        
                        
                    
@@ -98,19 +98,15 @@ HAVING movie_count>2
 -- 12. List the film title and the leading actor for all of the films 'Julie Andrews' played in.
 SELECT movie.title, actor.name
 FROM movie
-JOIN casting ON (movie.id=casting.movieid
-                 AND 
-                 casting.ord=1)
+JOIN casting ON (movie.id=casting.movieid AND casting.ord=1)
 JOIN actor ON (casting.actorid=actor.id)
 -- gives the title and leading actor for all films
-WHERE casting.movieid IN (
-	SELECT movieid
-    FROM casting
-	WHERE actorid IN (
-		SELECT id 
-        FROM actor 
-        WHERE name='Julie Andrews')
-	) -- selects movieids associated with Julie Andrews
+WHERE casting.movieid IN (SELECT movieid
+    			  FROM casting
+			  WHERE actorid IN (SELECT id 
+					    FROM actor 
+					    WHERE name='Julie Andrews')
+			 ); -- selects movieids associated with Julie Andrews
     
     
 
@@ -120,14 +116,21 @@ FROM actor
 JOIN casting ON  casting.actorid = actor.id
 WHERE casting.ord=1
 GROUP BY actor.name
-HAVING COUNT(casting.movieid)>=15
+HAVING COUNT(casting.movieid)>=15;
 
 
 
 -- 14. List the films released in the year 1978 ordered by the nuymber of actors in the cast, then by title
-SELECT 
+SELECT movie.title, COUNT(casting.actorid) AS cast_count
+FROM casting
+JOIN movie ON (movie.id=casting.movieid)
+WHERE movie.yr=1978
+GROUP BY movie.title
+ORDER BY cast_count DESC
 
-  
+
+
+-- 15. List all the people who have worked with 'Art Garfunkel'.
   
   
   
