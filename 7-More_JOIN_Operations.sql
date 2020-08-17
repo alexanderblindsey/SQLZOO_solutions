@@ -145,23 +145,3 @@ JOIN movie ON (casting.movieid=movie.id)
 WHERE actor.name != 'Art Garfunkel' 
 	AND movie.title IN (SELECT ag_movies
             		    FROM t1)  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
