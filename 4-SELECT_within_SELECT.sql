@@ -21,11 +21,9 @@ AND continent = 'Europe';
 SELECT name, continent
 FROM world
 WHERE continent in 
-    (
-    SELECT continent
-    FROM world
-    WHERE name IN ('Australia', 'Argentina')
-    )
+    (SELECT continent
+     FROM world
+     WHERE name IN ('Australia', 'Argentina'))
 ORDER BY name ASC;
 
 
@@ -35,13 +33,11 @@ FROM world
 WHERE population > 
     (SELECT population
     FROM world
-    WHERE name = 'Canada'
-    )
+    WHERE name = 'Canada')
 AND population <
     (SELECT population
      FROM world
-     WHERE name = 'Poland'
-     );
+     WHERE name = 'Poland');
 
 
 -- 5 Show the name and the population of each country in Europe. Show the population as a percentage of the population of Germany.
@@ -96,7 +92,6 @@ WHERE continent NOT IN
 -- 10 Some countries have populations more than three times that of any of their neighbours (in the same continent). Give the countries and continents.
 SELECT name, continent
 FROM world x
-WHERE population > all (
-			SELECT population*3
+WHERE population > all (SELECT population*3
                         FROM world y
                         WHERE y.continent = x.continent AND y.name != x.name);
