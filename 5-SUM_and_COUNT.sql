@@ -50,6 +50,7 @@ GROUP BY continent;
 WITH t1 AS (SELECT continent, SUM(population) as sum_pop
             FROM world
             GROUP BY continent
-            HAVING sum_pop>100000000) # HAVING goes after aggregator GROUP BY, where WHERE goes before. 
+            HAVING sum_pop>100000000 # HAVING goes after aggregator GROUP BY, where WHERE goes before. 
+            )
 SELECT continent
 FROM t1;
