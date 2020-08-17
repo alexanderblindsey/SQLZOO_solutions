@@ -79,8 +79,7 @@ GROUP BY stadium;
 WITH t1 AS (SELECT matchid, mdate
 	    FROM goal 
             JOIN game ON (goal.matchid=game.id)
-	    WHERE team1='POL' OR team2='POL'
-	   )
+	    WHERE team1='POL' OR team2='POL')
 
 SELECT matchid, mdate, count(matchid)
 FROM t1
@@ -111,8 +110,7 @@ WITH t1 AS (SELECT game.mdate, game.team1,
 	    CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END score2, 
 	    game.id
 	    FROM game
-            JOIN goal ON (matchid = id)
-            )
+            JOIN goal ON (matchid = id))
 
 SELECT mdate,
        team1, 
