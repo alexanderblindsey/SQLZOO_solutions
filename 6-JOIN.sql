@@ -8,11 +8,9 @@ WHERE teamid='GER'
 -- 2. Show id, stadium, team1, team2 for just game 1012
 SELECT id, stadium, team1, team2
 FROM game
-WHERE id = (
-	    SELECT matchid 
+WHERE id = (SELECT matchid 
 	    FROM goal # brings up game 1012
-            WHERE player LIKE '%Bender'
-            )
+            WHERE player LIKE '%Bender')
             
             
             
@@ -56,10 +54,11 @@ WHERE stadium = 'National Stadium, Warsaw';
 
 -- 8. Show the name of all players who have scored against Germany
 SELECT DISTINCT player
-  FROM goal JOIN game ON (goal.matchid=game.id)
-    WHERE teamid != 'GER' AND 
-     (team1='GER' OR
-     team2='GER');
+  FROM goal 
+  JOIN game ON (goal.matchid=game.id)
+  WHERE teamid != 'GER' AND 
+  	(team1='GER' OR
+  	 team2='GER');
      
      
   
