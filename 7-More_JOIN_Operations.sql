@@ -106,7 +106,7 @@ WHERE casting.movieid IN (SELECT movieid
 			  WHERE actorid IN (SELECT id 
 					    FROM actor 
 					    WHERE name='Julie Andrews')
-			 ); -- selects movieids associated with Julie Andrews
+			 ) -- selects movieids associated with Julie Andrews
     
     
 
@@ -131,10 +131,22 @@ ORDER BY cast_count DESC
 
 
 -- 15. List all the people who have worked with 'Art Garfunkel'.
+with t1 AS (SELECT movie.title AS ag_movies, actor.name
+	    FROM movie
+	    JOIN casting ON (casting.movieid=movie.id)
+	    JOIN actor ON (casting.actorid=actor.id)
+	    WHERE actor.name='Art Garfunkel')
+	-- t1 gives all movies with Art Garfunkel 
+
+SELECT actor.name
+FROM actor
+JOIN casting ON (casting.actorid=actor.id)
+JOIN movie ON (casting.movieid=movie.id)
+WHERE actor.name != 'Art Garfunkel' 
+	AND movie.title IN (SELECT ag_movies
+            		    FROM t1)  
   
-  
-  
-  
+
   
   
   
