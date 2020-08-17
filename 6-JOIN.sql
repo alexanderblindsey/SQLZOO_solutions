@@ -9,7 +9,8 @@ WHERE teamid='GER'
 SELECT id, stadium, team1, team2
 FROM game
 WHERE id = (
-			SELECT matchid FROM goal # brings up game 1012
+	    SELECT matchid 
+	    FROM goal # brings up game 1012
             WHERE player LIKE '%Bender'
             )
             
@@ -76,12 +77,11 @@ GROUP BY stadium;
 
 
 -- 11. For every match involving 'POL', show the matchid, date and the number of goals scored.
-WITH t1 AS (
-			SELECT matchid, mdate
-			FROM goal 
+WITH t1 AS (SELECT matchid, mdate
+	    FROM goal 
             JOIN game ON (goal.matchid=game.id)
-			WHERE team1='POL' OR team2='POL'
-            )
+	    WHERE team1='POL' OR team2='POL'
+	   )
 
 SELECT matchid, mdate, count(matchid)
 FROM t1
@@ -106,13 +106,12 @@ GROUP BY goal.matchid, game.mdate;
 
 
 -- 13. List every match with the goals scored by each team. Show mdate, team1, score1, team2, score2. Sort your result by mdate, matchid, team1 and team2
-WITH t1 AS (
-			SELECT game.mdate, game.team1,
-			CASE WHEN goal.teamid=game.team1 THEN 1 ELSE 0 END score1, -- when goal.teamid=game.team1, then fill 1 in new column. Else, fill 0. Name column "score1" 
-			game.team2, 
-			CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END score2, 
-			game.id
-			FROM game
+WITH t1 AS (SELECT game.mdate, game.team1,
+	    CASE WHEN goal.teamid=game.team1 THEN 1 ELSE 0 END score1, -- when goal.teamid=game.team1, then fill 1 in new column. Else, fill 0. Name column "score1" 
+	    game.team2, 
+	    CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END score2, 
+	    game.id
+	    FROM game
             JOIN goal ON (matchid = id)
             )
 
