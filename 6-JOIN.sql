@@ -1,7 +1,7 @@
 -- 1. Show matchid, player for all goals scored by Germany.
 SELECT matchid, player
 FROM goal
-WHERE teamid='GER'
+WHERE teamid='GER';
 
 
 
@@ -10,7 +10,7 @@ SELECT id, stadium, team1, team2
 FROM game
 WHERE id = (SELECT matchid 
 	    FROM goal # brings up game 1012
-            WHERE player LIKE '%Bender')
+            WHERE player LIKE '%Bender');
             
             
             
@@ -79,7 +79,7 @@ GROUP BY stadium;
 WITH t1 AS (SELECT matchid, mdate
 	    FROM goal 
             JOIN game ON (goal.matchid=game.id)
-	    WHERE team1='POL' OR team2='POL')
+	    WHERE team1='POL' OR team2='POL');
 
 SELECT matchid, mdate, count(matchid)
 FROM t1
@@ -110,7 +110,7 @@ WITH t1 AS (SELECT game.mdate, game.team1,
 	    CASE WHEN goal.teamid=game.team2 THEN 1 ELSE 0 END score2, 
 	    game.id
 	    FROM game
-            JOIN goal ON (matchid = id))
+            JOIN goal ON (matchid = id));
 
 SELECT mdate,
        team1, 
@@ -119,4 +119,4 @@ SELECT mdate,
        SUM(score2) AS score2
 FROM t1
 GROUP BY id
-ORDER BY mdate ASC, id ASC
+ORDER BY mdate ASC, id ASC;
