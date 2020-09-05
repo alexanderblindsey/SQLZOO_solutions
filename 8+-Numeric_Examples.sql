@@ -86,27 +86,3 @@ FROM nss
 WHERE question='Q01'
       AND (institution LIKE '%Manchester%')
 GROUP BY institution;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
