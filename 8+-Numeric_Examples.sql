@@ -44,18 +44,20 @@ WHERE question='Q22'
 GROUP BY subject;
 
 
+
 /*
 6. Show the percentage of students who A_STRONGLY_AGREE to question 22 for the subject '(8) Computer Science' show the same figure for the subject
 '(H) Creative Arts and Design'. Use the ROUND function to show the percentage without decimal places.
 */
 SELECT subject, 
        ROUND(
-         SUM(response * A_STRONGLY_AGREE / 100) / SUM(response) * 100,
-       0) -- round to nearest whole number
+         SUM(response*A_STRONGLY_AGREE/100)/SUM(response)*100,
+             0) -- round to nearest whole number
 FROM nss
 WHERE question='Q22'
-  AND subject IN ('(8) Computer Science',
-                  '(H) Creative Arts and Design')
+  AND subject 
+      IN ('(8) Computer Science',
+          '(H) Creative Arts and Design')
 GROUP BY subject;
 
 
@@ -65,9 +67,25 @@ GROUP BY subject;
 The column score is a percentage - you must use the method outlined above to multiply the percentage by the response and divide by the total response. 
 Give your answer rounded to the nearest whole number.
 */
+SELECT institution, 
+       ROUND(SUM(score*response)/SUM(response),
+             0)
+FROM nss
+WHERE question='Q22' 
+      AND institution 
+            LIKE '%Manchester%'
+GROUP BY institution;
 
 
 
+-- 8. Show the institution, the total sample size and the number of computing students for institutions in Manchester for 'Q01'. 
+SELECT institution,
+       SUM(sample),
+       SUM(CASE WHEN subject LIKE '(8)%' THEN sample END) comp
+FROM nss
+WHERE question='Q01'
+      AND (institution LIKE '%Manchester%')
+GROUP BY institution;
 
 
 
