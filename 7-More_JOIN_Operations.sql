@@ -42,7 +42,7 @@ WHERE casting.movieid=(SELECT id
 SELECT actor.name
 FROM actor
 JOIN casting
-ON actor.id=casting.actorid
+   ON actor.id=casting.actorid
 WHERE casting.movieid=(SELECT id
                        FROM movie
                        WHERE title='Alien');
@@ -53,9 +53,9 @@ WHERE casting.movieid=(SELECT id
 SELECT movie.title
 FROM movie
 JOIN casting
-ON movie.id=casting.movieid
+   ON movie.id=casting.movieid
 JOIN actor
-ON actor.id=casting.actorid
+   ON actor.id=casting.actorid
 WHERE actor.name='Harrison Ford';
 
 
@@ -64,9 +64,9 @@ WHERE actor.name='Harrison Ford';
 SELECT movie.title
 FROM movie
 JOIN casting
-ON movie.id=casting.movieid
+   ON movie.id=casting.movieid
 JOIN actor
-ON actor.id=casting.actorid
+   ON actor.id=casting.actorid
 WHERE actor.name='Harrison Ford' AND casting.ord!=1;
 
 
@@ -75,9 +75,9 @@ WHERE actor.name='Harrison Ford' AND casting.ord!=1;
 SELECT movie.title, actor.name
 FROM movie
 JOIN casting
-ON movie.id=casting.movieid
+   ON movie.id=casting.movieid
 JOIN actor
-ON actor.id=casting.actorid
+   ON actor.id=casting.actorid
 WHERE casting.ord=1 AND movie.yr='1962';
 
 
@@ -86,9 +86,9 @@ WHERE casting.ord=1 AND movie.yr='1962';
 SELECT movie.yr, COUNT(movie.title) as movie_count
 FROM movie
 	JOIN casting
-	ON movie.id=casting.movieid
+	   ON movie.id=casting.movieid
 JOIN actor
-	ON actor.id=casting.actorid
+   ON actor.id=casting.actorid
 WHERE actor.name='Rock Hudson'
 GROUP BY movie.yr
 HAVING movie_count>2
@@ -98,8 +98,10 @@ HAVING movie_count>2
 -- 12. List the film title and the leading actor for all of the films 'Julie Andrews' played in.
 SELECT movie.title, actor.name
 FROM movie
-JOIN casting ON (movie.id=casting.movieid AND casting.ord=1)
-JOIN actor ON (casting.actorid=actor.id)
+JOIN casting 
+   ON (movie.id=casting.movieid AND casting.ord=1)
+JOIN actor 
+   ON (casting.actorid=actor.id)
 -- gives the title and leading actor for all films
 WHERE casting.movieid IN (SELECT movieid
     			  FROM casting
@@ -113,7 +115,8 @@ WHERE casting.movieid IN (SELECT movieid
 -- 13. Obtain a list, in alphabetical order, of actors who've had at least 15 starring roles.
 SELECT actor.name
 FROM actor 
-JOIN casting ON  casting.actorid = actor.id
+JOIN casting 
+   ON  casting.actorid = actor.id
 WHERE casting.ord=1
 GROUP BY actor.name
 HAVING COUNT(casting.movieid)>=15;
@@ -123,7 +126,8 @@ HAVING COUNT(casting.movieid)>=15;
 -- 14. List the films released in the year 1978 ordered by the nuymber of actors in the cast, then by title
 SELECT movie.title, COUNT(casting.actorid) AS cast_count
 FROM casting
-JOIN movie ON (movie.id=casting.movieid)
+JOIN movie 
+   ON (movie.id=casting.movieid)
 WHERE movie.yr=1978
 GROUP BY movie.title
 ORDER BY cast_count DESC
@@ -131,17 +135,22 @@ ORDER BY cast_count DESC
 
 
 -- 15. List all the people who have worked with 'Art Garfunkel'.
-with t1 AS (SELECT movie.title AS ag_movies, actor.name
+with t1 AS (SELECT movie.title AS ag_movies,
+	           actor.name
 	    FROM movie
-	    JOIN casting ON (casting.movieid=movie.id)
-	    JOIN actor ON (casting.actorid=actor.id)
+	    JOIN casting 
+	       ON (casting.movieid=movie.id)
+	    JOIN actor 
+	       ON (casting.actorid=actor.id)
 	    WHERE actor.name='Art Garfunkel')
 	-- t1 gives all movies with Art Garfunkel 
 
 SELECT actor.name
 FROM actor
-JOIN casting ON (casting.actorid=actor.id)
-JOIN movie ON (casting.movieid=movie.id)
+JOIN casting 
+   ON (casting.actorid=actor.id)
+JOIN movie
+    ON (casting.movieid=movie.id)
 WHERE actor.name != 'Art Garfunkel' 
 	AND movie.title IN (SELECT ag_movies
-            		    FROM t1)  
+            		    FROM t1) 
