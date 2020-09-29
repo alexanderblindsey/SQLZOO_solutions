@@ -28,8 +28,7 @@ WHERE question='Q15'
 SELECT subject, SUM(response)
 FROM nss
 WHERE subject 
-  IN ('(8) Computer Science',
-      '(H) Creative Arts and Design')
+  IN ('(8) Computer Science', '(H) Creative Arts and Design')
   AND question='Q22'
 GROUP BY subject;
 
@@ -39,8 +38,7 @@ GROUP BY subject;
 SELECT subject, SUM(response*A_STRONGLY_AGREE/100) -- divide by 100 because it's asking for the total number and A_STRONGLY_AGREE is a %
 FROM nss
 WHERE question='Q22'
-  AND subject IN ('(8) Computer Science',
-                  '(H) Creative Arts and Design')
+  AND subject IN ('(8) Computer Science', '(H) Creative Arts and Design')
 GROUP BY subject;
 
 
@@ -51,8 +49,7 @@ GROUP BY subject;
 */
 SELECT subject, 
        ROUND(
-         SUM(response*A_STRONGLY_AGREE/100)/SUM(response)*100,
-             0) -- round to nearest whole number
+         SUM(response * A_STRONGLY_AGREE / 100) / SUM(response) * 100, 0) -- round to nearest whole number
 FROM nss
 WHERE question='Q22'
   AND subject 
@@ -68,8 +65,7 @@ The column score is a percentage - you must use the method outlined above to mul
 Give your answer rounded to the nearest whole number.
 */
 SELECT institution, 
-       ROUND(SUM(score*response)/SUM(response),
-             0)
+       ROUND(SUM(score * response) / SUM(response), 0)
 FROM nss
 WHERE question='Q22' 
       AND institution 
